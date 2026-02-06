@@ -1,0 +1,11 @@
+langchain
+langgraph
+faiss-cpu
+openai
+tiktoken
+sentence-transformers
+ollama
+python-dotenv
+
+------------------------------------------
+
