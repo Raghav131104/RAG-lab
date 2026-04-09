@@ -1,0 +1,116 @@
+AI SYSTEMS LAB (20IC305P)
+RAGHAV KUMAR (23BIT073)
+EXPERIMENT 1
+Breadth First Search (BFS) Algorithm
+AIM
+To study and implement the Breadth First Search (BFS) algorithm using C++.
+THEORY
+Introduction
+Breadth First Search (BFS) is a graph traversal algorithm that explores vertices in the order of their distance from the source vertex. It starts at a given vertex and explores all vertices at the present depth level before moving on to vertices at the next depth level. BFS uses a queue data structure to keep track of the vertices that need to be explored.
+Key Characteristics
+• Uses FIFO (First In First Out) principle through a queue
+• Explores vertices level by level
+• Guarantees shortest path in unweighted graphs
+• Requires more memory compared to DFS due to queue storage
+• Complete algorithm - will find solution if it exists
+Algorithm Steps
+1. Start with a source vertex and mark it as visited
+2. Add the source vertex to the queue
+3. While the queue is not empty:
+a. Dequeue a vertex from the front of the queue
+b. Process the dequeued vertex
+c. For all adjacent vertices of the dequeued vertex:
+i. If the adjacent vertex is not visited, mark it as visited and enqueue it
+4. Repeat step 3 until the queue becomes empty
+Time and Space Complexity
+Time Complexity: O(V + E) where V is the number of vertices and E is the number of edges
+Space Complexity: O(V) for the queue and visited array
+AI SYSTEMS LAB (20IC305P)
+RAGHAV KUMAR (23BIT073)
+Applications
+• Finding shortest path in unweighted graphs
+• Web crawling and search engines
+• Social networking features (finding connections, friend suggestions)
+• GPS navigation systems
+• Broadcasting in networks
+• Garbage collection algorithms
+CODE
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+class Graph {
+int V; // Number of vertices
+vector<vector<int>> adj; // Adjacency list
+public:
+// Constructor
+Graph(int vertices) {
+V = vertices;
+adj.resize(V);
+}
+// Add edge (undirected graph)
+void addEdge(int u, int v) {
+adj[u].push_back(v);
+adj[v].push_back(u);
+}
+// BFS traversal
+void BFS(int start) {
+vector<bool> visited(V, false);
+AI SYSTEMS LAB (20IC305P)
+RAGHAV KUMAR (23BIT073)
+queue<int> q;
+visited[start] = true;
+q.push(start);
+cout << "BFS Traversal: ";
+while (!q.empty()) {
+int node = q.front();
+q.pop();
+cout << node << " ";
+for (int neighbor : adj[node]) {
+if (!visited[neighbor]) {
+visited[neighbor] = true;
+q.push(neighbor);
+}
+}
+}
+}
+};
+int main() {
+int V, E;
+cout << "Enter number of vertices: ";
+cin >> V;
+Graph g(V);
+cout << "Enter number of edges: ";
+cin >> E;
+cout << "Enter edges (u v):\n";
+for (int i = 0; i < E; i++) {
+AI SYSTEMS LAB (20IC305P)
+RAGHAV KUMAR (23BIT073)
+int u, v;
+cin >> u >> v;
+g.addEdge(u, v);
+}
+int start;
+cout << "Enter starting vertex: ";
+cin >> start;
+g.BFS(start);
+return 0;
+}OUTPUT
+Enter number of vertices: 5
+Enter number of edges: 6
+Enter edges (u v):
+0 1
+0 2
+1 3
+1 4
+2 4
+3 4
+Enter starting vertex: 0
+BFS Traversal: 0 1 2 3 4
+=== Code Execution Successful ===
+RESULT
+The Breadth First Search algorithm was successfully implemented in C++. The program correctly performs level-by-level traversal of the graph using a queue data structure. The implementation demonstrates the key features of BFS including proper vertex visiting order, queue operations, and adjacency list representation of graphs.
+AI SYSTEMS LAB (20IC305P)
+RAGHAV KUMAR (23BIT073)
+CONCLUSION
+Through this practical, we successfully studied and implemented the Breadth First Search algorithm using C++. We learned that BFS is an efficient graph traversal technique that explores vertices level by level using a queue. The algorithm is particularly useful for finding the shortest path in unweighted graphs and has various real-world applications in networking, social media, and navigation systems. The implementation helped us understand the importance of queue data structure in maintaining the order of exploration and the use of a visited array to prevent cycles. BFS's systematic approach makes it a fundamental algorithm in graph theory and computer science.

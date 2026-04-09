@@ -1,14 +1,24 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
+from langchain_community.document_loaders import DirectoryLoader, TextLoader
 import os
 
-DOCS_PATH = os.getenv("DOCS_PATH", "data/sample_docs.txt")
+DOCS_DIR = os.getenv("DOCS_DIR", "data")
 
-# Load documents
-with open(DOCS_PATH, "r", encoding="utf-8") as f:
-    text = f.read()
+print(f"Loading all text files from the '{DOCS_DIR}' directory...")
 
+# Load all .txt files in the directory
+# (Note: To load PDFs or other formats, we can easily add PyPDFLoader or UnstructuredLoader later!)
+loader = DirectoryLoader(
+    DOCS_DIR, 
+    glob="**/*.txt", 
+    loader_cls=TextLoader,
+    loader_kwargs={'encoding': 'utf-8'}
+)
+documents = loader.load()
+
+print(f"Successfully loaded {len(documents)} files.")
 
 # Split text into chunks
 splitter = RecursiveCharacterTextSplitter(
@@ -16,8 +26,8 @@ splitter = RecursiveCharacterTextSplitter(
     chunk_overlap=200
 )
 
+docs = splitter.split_documents(documents)
 
-docs = splitter.create_documents([text])
 
 # Create embeddings
 embeddings = HuggingFaceEmbeddings(

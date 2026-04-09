@@ -12,7 +12,7 @@ vectorstore = FAISS.load_local(
 
 def retriever_agent(state):
     query = state["query"]
-    docs = vectorstore.similarity_search(query, k=10)
+    docs = vectorstore.similarity_search(query, k=25)
 
     print("\nRetrieved docs:")
     for d in docs:
